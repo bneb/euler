@@ -16,9 +16,10 @@ I'm using CMake and Clang and developing locally in vim with some simple syntax 
 ## Building && Running
 
 I use bash executables to build and run the programs with configurable user input.
-- `./clean.sh` will delete everything in `./problem*/build/`.
-- `./makeit.sh` generates build files and builds into `./problem*/build/`.
-- `./run.sh` will run the program with user input passed without a flag: `./run.sh 10`.
+- `problem*/clean.sh` will delete everything in `./problem*/build/`.
+- `problem*/makeit.sh` generates build files and builds into `./problem*/build/`.
+- `problem*/run.sh` will run the program with user input passed without a flag: `./run.sh 10`.
+- `./new.sh` will create the directory for the next problem.
 
 ---
 
