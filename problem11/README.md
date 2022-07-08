@@ -1,6 +1,11 @@
 # Problem 11
 
-Sum primes below n.
+In a grid, find map product of n linearly adjacent numbers.
 
 ---
 
+```
+  Args: 4
+Result: 70600674
+  Time: 25533 ns
+```
