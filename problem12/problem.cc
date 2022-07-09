@@ -8,32 +8,82 @@ using namespace std;
 
 namespace euler {
 
-int number_of_divisors(long long i) {
+// number of divisors for n
+int number_of_divisors(long long n) {
   int result = 0;
 
-  for (int di=1; di<=i; di++) {
-    if ((i%di) == 0) {
-      result++;
+  // When i divides n, so does n/i; increment by 2.
+  int i = 1;
+  for (; i*i<n; i++) {
+    if ((n%i) == 0) {
+      result+=2;
     }
+  }
+
+  // account for when n is a square.
+  if ((n%i) == 0) {
+    result += 1;
   }
 
   return result;
 }
 
-long long first_triangle_with_n_divisors(int n) {
-  if (n == 1) {
-    return 1;
+// returns true if n is prime, else false
+bool is_prime(int n) {
+  if (((n&1) == 0) || ((n%3) == 0)) {
+    return false;
   }
 
-  long long acc = 1;
+  int jump = 2;
 
-  for (int i=2; ; i++) {
-    if ((i%10000) == 0) {
-      cout << "i: " << i << endl;
+  for (int p=5; p*p<=n; p+=jump) {
+    if ((n%p) == 0) {
+      return false;
     }
-    acc+=i;
-    if (number_of_divisors(acc) > n) {
-      return acc;
+
+    jump = 6-jump;
+  }
+
+  return true;
+}
+
+// returns the product of the first n primes
+long long get_first_n_primes_product(double n) {
+  if (n == 1) return 2;
+  if (n == 2) return 6;
+
+  long long acc = 30;
+  int jump = 2;
+  int p = 5;
+
+  for (int i = 2; i<n; i+=jump) {
+    if (is_prime(p)) {
+      acc *= p;
+    }
+
+    p += jump;
+    jump = 6-jump;
+  }
+
+  return acc;
+}
+
+
+long long first_triangle_with_n_divisors(int n) {
+  if (n < 3) return n;
+
+  int num_primes = floor(log2(n));
+  long long lower_bound = get_first_n_primes_product(num_primes);
+  long long upper_bound = lower_bound*lower_bound;
+
+  long long tri;
+  int nod;
+
+  for (int i=lower_bound; i<=upper_bound; i++) {
+    tri = (i*(i+1))/2;
+    nod = number_of_divisors(tri);
+    if (nod > n) {
+      return tri;
     }
   }
 
